@@ -19,36 +19,27 @@ resource "aws_security_group" "this" {
     create = var.create_timeout
     delete = var.delete_timeout
   }
-}
+   dynamic ingress {
+    for_each = var.ingress
+    content {
+      description      = lookup(ingress.value, "description", null)
+      from_port        = lookup(ingress.value, "from_port", null)
+      to_port          = lookup(ingress.value, "to_port", null)
+      protocol         = lookup(ingress.value, "protocol", null)
+      cidr_blocks      = lookup(ingress.value, "cidr_blocks", null)
+      ipv6_cidr_blocks = lookup(ingress.value, "ipv6_cidr_blocks", null)
+    }
+  }
 
-resource "aws_security_group_rule" "ingress_rules" {
-  count = length(var.ingress_rules)
-
-  security_group_id = aws_security_group.this.id
-  type              = "ingress"
-
-  cidr_blocks      = var.ingress_cidr_blocks
-  ipv6_cidr_blocks = var.ingress_ipv6_cidr_blocks
-  prefix_list_ids  = var.ingress_prefix_list_ids
-  description      = var.rules[var.ingress_rules[count.index]][3]
-
-  from_port = var.rules[var.ingress_rules[count.index]][0]
-  to_port   = var.rules[var.ingress_rules[count.index]][1]
-  protocol  = var.rules[var.ingress_rules[count.index]][2]
-}
-
-resource "aws_security_group_rule" "egress_rules" {
-  count = length(var.egress_rules)
-
-  security_group_id = aws_security_group.this.id
-  type              = "egress"
-
-  cidr_blocks      = var.egress_cidr_blocks
-  ipv6_cidr_blocks = var.egress_ipv6_cidr_blocks
-  prefix_list_ids  = var.egress_prefix_list_ids
-  description      = var.rules[var.egress_rules[count.index]][3]
-
-  from_port = var.rules[var.egress_rules[count.index]][0]
-  to_port   = var.rules[var.egress_rules[count.index]][1]
-  protocol  = var.rules[var.egress_rules[count.index]][2]
+  dynamic egress {
+    for_each = var.egress
+    content {
+      description      = lookup(egress.value, "description", null)
+      from_port        = lookup(egress.value, "from_port", null)
+      to_port          = lookup(egress.value, "to_port", null)
+      protocol         = lookup(egress.value, "protocol", null)
+      cidr_blocks      = lookup(egress.value, "cidr_blocks", null)
+      ipv6_cidr_blocks = lookup(egress.value, "ipv6_cidr_blocks", null)
+    }
+  }
 }
