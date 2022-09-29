@@ -1,5 +1,4 @@
-region = "us-east-1"
-name="security group"
+region = "ap-south-1"
 description="testing purpose"
 revoke_rules_on_delete=false
 ingress=[{
