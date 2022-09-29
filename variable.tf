@@ -45,68 +45,14 @@ variable "delete_timeout" {
   default     = "15m"
 }
 
-variable "ingress_rules" {
-  description = "List of ingress rules to create by name"
-  type        = list(string)
-  default     = []
-}
-
-variable "security_group_id" {
-  description = "ID of existing security group whose rules we will manage"
-  type        = string
+variable "ingress" {
+  description = "ingress rules"
+  type        = list(any)
   default     = null
 }
 
-variable "ingress_with_source_security_group_id" {
-  description = "List of ingress rules to create where 'source_security_group_id' is used"
-  type        = list(map(string))
-  default     = []
+variable "egress" {
+  description = "ingress rules"
+  type        = list(any)
+  default     = null
 }
-
-variable "ingress_cidr_blocks" {
-  description = "List of IPv4 CIDR ranges to use on all ingress rules"
-  type        = list(string)
-  default     = []
-}
-
-variable "ingress_ipv6_cidr_blocks" {
-  description = "List of IPv6 CIDR ranges to use on all ingress rules"
-  type        = list(string)
-  default     = []
-}
-
-variable "ingress_prefix_list_ids" {
-  description = "List of prefix list IDs (for allowing access to VPC endpoints) to use on all ingress rules"
-  type        = list(string)
-  default     = []
-}
-
-variable "egress_rules" {
-  description = "List of egress rules to create by name"
-  type        = list(string)
-  default     = []
-}
-
-variable "egress_cidr_blocks" {
-  description = "List of IPv4 CIDR ranges to use on all egress rules"
-  type        = list(string)
-  default     = ["0.0.0.0/0"]
-}
-
-variable "egress_ipv6_cidr_blocks" {
-  description = "List of IPv6 CIDR ranges to use on all egress rules"
-  type        = list(string)
-  default     = ["::/0"]
-}
-
-variable "egress_prefix_list_ids" {
-  description = "List of prefix list IDs (for allowing access to VPC endpoints) to use on all egress rules"
-  type        = list(string)
-  default     = []
-}
-
-variable "rules" {
-  description = "Map of known security group rules (define as 'name' = ['from port', 'to port', 'protocol', 'description'])"
-  type        = map(list(any))
-  default={}
-  }
