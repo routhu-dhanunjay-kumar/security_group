@@ -3,9 +3,9 @@ package terraform.analysis
 import input as tfplan
 
 
-default deny_non_secured_ports = true
+default deny_non_secured_ports = false
 
-deny_non_secured_ports = false  {
+deny_non_secured_ports = true  {
     
     input.resources[_].type == "aws_security_group"
    
