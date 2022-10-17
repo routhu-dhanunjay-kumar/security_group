@@ -1,5 +1,4 @@
 package terraform.analysis
-package terraform.analysis
 
 import input as tfplan
 
